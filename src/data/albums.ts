@@ -6,8 +6,8 @@ export const albums = [
     title: 'Maine',
     note: 'A lighthouse on the coast, seen from two perspectives.',
     photos: [
-      { src: '/media/photo-03.jpg', alt: 'Lighthouse on the coast of Maine', caption: 'The lighthouse' },
-      { src: '/media/photo-01.jpg', alt: 'Lighthouse with trolley beside the sea', caption: 'A wider view' },
+      { src: '/media/photo-01.jpg', alt: 'Lighthouse with trolley beside the sea', caption: 'The lighthouse' },
+      { src: '/media/photo-03.jpg', alt: 'Lighthouse on the coast of Maine', caption: 'A wider view' },
     ],
   },
   {

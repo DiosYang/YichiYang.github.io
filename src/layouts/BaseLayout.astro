@@ -8,19 +8,20 @@ interface Props {
 }
 
 const {
-  title = 'Dios Yang — Data Science & Photography',
-  description = 'The portfolio of Yichi (Dios) Yang: machine learning, data science, research, and photography.',
+  title = 'Dios Yang',
+  description = 'The personal website of Yichi (Dios) Yang.',
 } = Astro.props;
 
 const path = Astro.url.pathname;
 const links = [
-  { href: '/', label: 'Home' },
   { href: '/about/', label: 'About' },
-  { href: '/project/', label: 'Projects' },
+  { href: '/project/', label: 'Project' },
+  { href: '/cv-resume/', label: 'CV/Resume' },
   { href: '/photography/', label: 'Photography' },
-  { href: '/cv-resume/', label: 'CV / Resume' },
 ];
-const active = (href: string) => href === '/' ? path === sitePath('/') : path.startsWith(sitePath(href));
+const active = (href: string) => href === '/about/'
+  ? path === sitePath('/') || path.startsWith(sitePath(href))
+  : path.startsWith(sitePath(href));
 ---
 <!doctype html>
 <html lang="en">
@@ -28,7 +29,7 @@ const active = (href: string) => href === '/' ? path === sitePath('/') : path.st
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f5f4ee" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="robots" content="noindex, nofollow" />
     <title>{title}</title>
     <link rel="icon" href={sitePath('/favicon.svg')} type="image/svg+xml" />
@@ -36,34 +37,25 @@ const active = (href: string) => href === '/' ? path === sitePath('/') : path.st
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-shell">
-      <header class="site-header wrap">
-        <a class="brand" href={sitePath('/')} aria-label="Dios Yang, home"><span class="brand-mark">D<span class="brand-dot">.</span>Y</span><span class="brand-name">Dios Yang</span></a>
-        <nav class="desktop-nav" aria-label="Main navigation">
-          {links.map((link) => <a href={sitePath(link.href)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
-        </nav>
-        <a class="header-contact" href="mailto:Diosyang59@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>
-        <details class="mobile-menu">
-          <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav aria-label="Mobile navigation">
+      <aside class="sidebar" aria-label="Site navigation">
+        <div class="sidebar-inner">
+          <a class="site-title" href={sitePath('/')}>Dios Yang</a>
+          <nav class="side-nav" aria-label="Main navigation">
             {links.map((link) => <a href={sitePath(link.href)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
-            <a href="mailto:Diosyang59@gmail.com">Get in touch ↗</a>
           </nav>
-        </details>
-      </header>
-      <main id="main-content"><slot /></main>
-      <footer class="site-footer">
-        <div class="wrap footer-top">
-          <div>
-            <p class="eyebrow">Have something in mind?</p>
-            <a class="footer-callout" href="mailto:Diosyang59@gmail.com">Let’s connect <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="footer-side">
-            <p>Data is one way to see the world.<br />Photography is another.</p>
-            <a href="mailto:Diosyang59@gmail.com">Diosyang59@gmail.com</a>
-          </div>
+          <div class="social-marks" aria-hidden="true"><span>𝕏</span><span>f</span><span>◎</span></div>
+          <details class="mobile-menu">
+            <summary>Menu</summary>
+            <nav aria-label="Mobile navigation">
+              {links.map((link) => <a href={sitePath(link.href)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
+            </nav>
+          </details>
         </div>
-        <div class="wrap footer-bottom"><span>© {new Date().getFullYear()} Yichi (Dios) Yang</span><span>Built with care, curiosity, and code.</span><a href="#main-content">Back to top ↑</a></div>
-      </footer>
+      </aside>
+      <div class="site-main-column">
+        <main id="main-content" class="site-main"><div class="content"><slot /></div></main>
+        <footer class="site-footer">© {new Date().getFullYear()} Yichi (Dios) Yang</footer>
+      </div>
     </div>
   </body>
 </html>

@@ -3,5 +3,6 @@ import { sitePath } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Maine — Dios Yang" description="Photographs of the Maine coast by Dios Yang.">
-  <section class="page-head wrap"><a class="back-link" href={sitePath('/photography/')}>← Photography</a><p class="eyebrow">Photography / Maine</p><h1>On the <em>coast.</em></h1><p>The photographs from the original Maine page now live together in a collection.</p><a class="button button-dark legacy-album-link" href={sitePath('/photography/maine/')}>View the Maine collection <span aria-hidden="true">↗</span></a></section>
+  <h1 class="page-title">Maine</h1>
+  <p><a class="simple-back" href={sitePath('/photography/maine/')}>View the Maine photographs →</a></p>
 </BaseLayout>

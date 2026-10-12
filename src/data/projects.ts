@@ -16,7 +16,7 @@ export const projects = [
     number: '02',
   },
   {
-    title: 'Prediction of Economic Situation from Economic News — NLP Project',
+    title: 'Prediction of Economic Situation from Economic News –NLP Project',
     slug: 'prediction-of-economic-situation-from-economic-news-nlp-project',
     area: 'Natural language processing',
     description: 'Project details are being prepared.',
@@ -24,7 +24,7 @@ export const projects = [
     number: '03',
   },
   {
-    title: 'Using Multilevel Bayesian Models to Evaluate How Happiness Changes Around the World',
+    title: 'Using Multilevel-Bayesian Model to Evaluate How Happiness Changes Around the World',
     slug: 'using-multilevel-bayesian-model-to-evaluate-how-happiness-changes-around-the-world',
     area: 'Bayesian statistics',
     description: 'Project details are being prepared.',
