@@ -2,16 +2,22 @@
 import { sitePath } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { albums } from '../../data/albums';
+
+const columns = [0, 1, 2].map((column) =>
+  albums.map((album, index) => ({ album, index })).filter(({ index }) => index % 3 === column)
+);
 ---
 <BaseLayout title="Photography — Dios Yang" description="Photography collections by Yichi (Dios) Yang.">
   <h1 class="page-title">Photography</h1>
   <div class="photo-grid" aria-label="Photography collections">
-    {albums.map((album, index) => <a class="photo-cover" href={sitePath(`/photography/${album.slug}/`)} aria-label={`View ${album.title} photography collection`}>
-      <img src={sitePath(album.photos[0].src)} alt={album.photos[0].alt} loading={index < 2 ? 'eager' : 'lazy'} />
-      <span class="photo-cover-overlay">
-        <span class="photo-cover-title">{album.title}</span>
-        <span class="photo-cover-description">{album.note}</span>
-      </span>
-    </a>)}
+    {columns.map((column) => <div class="photo-column">
+      {column.map(({ album, index }) => <a class="photo-cover" style={`--photo-order:${index}`} href={sitePath(`/photography/${album.slug}/`)} aria-label={`View ${album.title} photography collection`}>
+        <img src={sitePath(album.photos[0].src)} alt={album.photos[0].alt} loading={index < 3 ? 'eager' : 'lazy'} />
+        <span class="photo-cover-overlay">
+          <span class="photo-cover-title">{album.title}</span>
+          <span class="photo-cover-description">{album.note}</span>
+        </span>
+      </a>)}
+    </div>)}
   </div>
 </BaseLayout>
