@@ -1,6 +1,6 @@
 ---
 import { sitePath } from '../../../lib/paths';
-import GalleryLayout from '../../../layouts/GalleryLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { albums } from '../../../data/albums';
 
 export function getStaticPaths() {
@@ -9,18 +9,16 @@ export function getStaticPaths() {
 
 const { album } = Astro.props;
 ---
-<GalleryLayout title={`${album.title} — Photography — Dios Yang`} description={album.note}>
-  <div class="gallery-album">
-    <a class="gallery-back" href={sitePath('/photography/')}>← Photography</a>
-    <h1>{album.title}</h1>
-    <p class="gallery-album-intro">{album.note}</p>
-    <div class="gallery-album-images" aria-label={`${album.title} photographs`}>
+<BaseLayout title={`${album.title} — Photography — Dios Yang`} description={album.note}>
+  <h1 class="page-title">{album.title}</h1>
+  <p class="album-intro">{album.note}</p>
+  <a class="simple-back" href={sitePath('/photography/')}>← Photography</a>
+  <div class="album-photos" aria-label={`${album.title} photographs`}>
     {album.photos.map((photo, index) => <figure>
       <a href={sitePath(photo.src)} target="_blank" rel="noopener" aria-label={`Open full photograph: ${photo.caption}`}>
         <img src={sitePath(photo.src)} alt={photo.alt} loading={index === 0 ? 'eager' : 'lazy'} />
       </a>
       <figcaption>{photo.caption}</figcaption>
     </figure>)}
-    </div>
   </div>
-</GalleryLayout>
+</BaseLayout>
