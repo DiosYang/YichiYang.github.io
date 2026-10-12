@@ -1,40 +1,23 @@
 ---
-import { sitePath } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Career — Dios Yang" description="Professional experience and education of Yichi (Dios) Yang.">
+<BaseLayout title="Career — Dios Yang" description="Professional experience of Yichi (Dios) Yang.">
   <h1 class="page-title">Career</h1>
-  <p>My work has brought together research, data analysis, and financial markets.</p>
-
-  <section class="career-section" aria-labelledby="experience-heading">
-    <h2 id="experience-heading">Experience</h2>
+  <div class="career-list" aria-label="Professional experience">
     <div class="career-entry">
-      <span class="career-dates">Jun – Aug 2021 · Shanghai</span>
-      <h3>Henan Yiluo Investment Co., Ltd.</h3>
-      <p class="career-role">Analyst Intern · Department of Strategy</p>
-      <p>Researched the mechanization industry and built a historical stock database using Python and SQL.</p>
+      <span class="career-dates">Jul 2025 – Present</span>
+      <h2>Beijing Shuji Intelligent Technology Co., Ltd.</h2>
+      <p>Model Data Engineer</p>
     </div>
     <div class="career-entry">
-      <span class="career-dates">Dec 2020 – Jan 2021 · Zhengzhou</span>
-      <h3>Central China Securities Co., Ltd.</h3>
-      <p class="career-role">Asset Management Intern · Department of Strategy</p>
-      <p>Studied industry rotation and market trends using statistical indicators, Python, and SQL.</p>
-    </div>
-  </section>
-
-  <section class="career-section" aria-labelledby="education-heading">
-    <h2 id="education-heading">Education</h2>
-    <div class="career-entry">
-      <span class="career-dates">2023 – 2024</span>
-      <h3>Columbia University</h3>
-      <p class="career-role">M.A. in Statistics</p>
+      <span class="career-dates">Jun – Aug 2021</span>
+      <h2>Henan Yiluo Investment Co., Ltd.</h2>
+      <p>Analyst Intern · Department of Strategy</p>
     </div>
     <div class="career-entry">
-      <span class="career-dates">2019 – 2023</span>
-      <h3>New York University</h3>
-      <p class="career-role">B.A. in Mathematics and Economics Theory · Minor in Computer Science</p>
+      <span class="career-dates">Dec 2020 – Jan 2021</span>
+      <h2>Central China Securities Co., Ltd.</h2>
+      <p>Asset Management Intern · Department of Strategy</p>
     </div>
-  </section>
-
-  <p class="career-resume-link"><a href={sitePath('/cv-resume/')}>View full CV / Resume →</a></p>
+  </div>
 </BaseLayout>
