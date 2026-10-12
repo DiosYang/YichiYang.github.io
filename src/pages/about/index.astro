@@ -1,0 +1,19 @@
+---
+import { sitePath } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="About — Dios Yang" description="Meet Yichi (Dios) Yang, a machine learning engineer, data scientist, and photographer.">
+  <section class="page-head wrap"><p class="eyebrow">About / The person behind the work</p><h1>Hi, I’m <em>Dios.</em></h1><p>I'm a machine learning engineer and data scientist with a strong passion for interpreting the world through data—and letting data speak back in insight.</p></section>
+  <section class="about-story wrap">
+    <div class="about-aside"><div class="about-aside-photo"><img src={sitePath('/media/photo-04.jpg')} alt="A road winding through a forest, photographed by Dios Yang" /></div><p>Look closely. There is always another pattern.</p></div>
+    <div class="about-prose prose">
+      <p>I completed a bachelor’s degree in mathematics and economics at New York University and earned a Master of Arts in Statistics from Columbia University.</p>
+      <p>I have a strong foundation in statistics, programming, and applied mathematics. My projects span large-scale data processing, model interpretability, and end-to-end machine learning pipelines—from data exploration and feature engineering to deployment.</p>
+      <p>I believe feature selection is more than a way to improve performance. It opens a window into the deeper structure of the data. I’m interested in how variables connect, interact, and shape outcomes. To me, machine learning is a way to uncover the logic behind the world, not just to make predictions.</p>
+      <h2>Beyond the data</h2>
+      <p>I find joy in capturing the subtle patterns of everyday life through photography. A shift of light and shadow, the rhythm of a crowded street, a fleeting moment of stillness—each changes how I see. Photography is another way of learning to look closely.</p>
+      <div class="about-links"><a class="text-link" href={sitePath('/project/')}>Explore my projects ↗</a><a class="text-link" href={sitePath('/photography/')}>See my photographs ↗</a></div>
+    </div>
+  </section>
+  <section class="contact-panel wrap"><div><p class="eyebrow">Get in touch</p><h2>Let’s start a <em>conversation.</em></h2></div><div><a href="mailto:Diosyang59@gmail.com">Diosyang59@gmail.com ↗</a><p>+86 186 2558 2953<br />+1 347 277 3329</p></div></section>
+</BaseLayout>

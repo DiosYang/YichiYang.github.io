@@ -1,0 +1,26 @@
+---
+import { sitePath } from '../../../lib/paths';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { albums } from '../../../data/albums';
+
+export function getStaticPaths() {
+  return albums.map((album) => ({ params: { slug: album.slug }, props: { album } }));
+}
+
+const { album } = Astro.props;
+---
+<BaseLayout title={`${album.title} — Photography — Dios Yang`} description={album.note}>
+  <section class="album-head wrap">
+    <a class="back-link" href={sitePath('/photography/')}>← All collections</a>
+    <p class="eyebrow">Photography / {album.photos.length} {album.photos.length === 1 ? 'photograph' : 'photographs'}</p>
+    <h1>{album.title}<em>.</em></h1>
+    <p>{album.note}</p>
+  </section>
+  <section class="album-gallery wrap" aria-label={`${album.title} photographs`}>
+    {album.photos.map((photo, index) => <figure>
+      <a href={sitePath(photo.src)} target="_blank" rel="noopener" aria-label={`Open full photograph: ${photo.caption}`}><img src={sitePath(photo.src)} alt={photo.alt} loading={index === 0 ? 'eager' : 'lazy'} /></a>
+      <figcaption><span>{String(index + 1).padStart(2, '0')} / {photo.caption}</span><span>View full image ↗</span></figcaption>
+    </figure>)}
+  </section>
+  <section class="album-end wrap"><a class="text-link" href={sitePath('/photography/')}>Back to all collections <span aria-hidden="true">↗</span></a></section>
+</BaseLayout>
