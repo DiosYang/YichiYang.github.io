@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+import { sitePath } from '../lib/paths';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about/', label: 'About' },
+  { href: '/career/', label: 'Career' },
+  { href: '/project/', label: 'Project' },
+  { href: '/cv-resume/', label: 'CV/Resume' },
+  { href: '/photography/', label: 'Photography' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#202124" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <link rel="icon" href={sitePath('/favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body class="gallery-body">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="gallery-header">
+      <nav class="gallery-nav" aria-label="Main navigation">
+        {links.map((link) => <a href={sitePath(link.href)} aria-current={link.href === '/photography/' ? 'page' : undefined}>{link.label}</a>)}
+      </nav>
+    </header>
+    <main class="gallery-main" id="main-content"><slot /></main>
+    <footer class="gallery-footer">© {new Date().getFullYear()} Yichi (Dios) Yang</footer>
+  </body>
+</html>
