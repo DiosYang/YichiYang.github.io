@@ -1,0 +1,12 @@
+---
+import { sitePath } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="CV & Resume — Dios Yang" description="Download Yichi (Dios) Yang's resume in English or Chinese.">
+  <section class="page-head wrap"><p class="eyebrow">CV / Resume</p><h1>Experience,<br /><em>at a glance.</em></h1><p>Choose the version that works best for you. Both documents open as PDFs.</p></section>
+  <section class="resume-options wrap">
+    <a class="resume-card" href={sitePath('/media/resume-en.pdf')} target="_blank" rel="noopener"><span class="eyebrow">01 / English</span><div><h2>Resume</h2><p>View or download the English PDF.</p></div><span class="resume-card-arrow" aria-hidden="true">↗</span></a>
+    <a class="resume-card" href={sitePath('/media/resume-zh.pdf')} target="_blank" rel="noopener"><span class="eyebrow">02 / 中文</span><div><h2>简历</h2><p>查看或下载中文版 PDF。</p></div><span class="resume-card-arrow" aria-hidden="true">↗</span></a>
+  </section>
+  <section class="resume-note wrap"><p>Prefer a conversation? <a href="mailto:Diosyang59@gmail.com">Email me directly ↗</a></p></section>
+</BaseLayout>
