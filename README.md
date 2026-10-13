@@ -11,6 +11,12 @@ npm run dev
 
 Open the local address printed by Astro. Change page copy in `src/pages/`, project summaries in `src/data/projects.ts`, photography collections in `src/data/albums.ts`, global styles in `src/styles/global.css`, and images or PDFs in `public/media/`.
 
+## Edit Career content
+
+Each experience has a Markdown file in `src/content/career/`. Edit the English text below the frontmatter to update its detail page. The title, dates, role, slug, and order in the frontmatter also control the Career list.
+
+The five case-study sections in `du-xiaoman.md` are ready for expansion. Replace each `Details to be added.` paragraph with your content; the HTML comments provide writing prompts and are not displayed on the page. Save to preview locally, then commit and publish the changes through the GitHub Pages workflow.
+
 ## Publish
 
 Pushing to `main` runs the GitHub Pages workflow. The repository's Settings → Pages source must be **GitHub Actions**.

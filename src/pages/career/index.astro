@@ -1,28 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sitePath } from '../../lib/paths';
+import { career } from '../../data/career';
 ---
 <BaseLayout title="Career — Dios Yang" description="Professional experience of Yichi (Dios) Yang.">
   <h1 class="page-title">Career</h1>
   <div class="career-list" aria-label="Professional experience">
-    <div class="career-entry">
-      <span class="career-dates">Oct 2025 – Present</span>
-      <h2>Du Xiaoman Technology (Beijing) Co., Ltd.</h2>
-      <p>Risk Variable Mining</p>
-    </div>
-    <div class="career-entry">
-      <span class="career-dates">Jul – Sep 2025</span>
-      <h2>Beijing Shuji Intelligent Technology Co., Ltd.</h2>
-      <p>Model Data Engineer</p>
-    </div>
-    <div class="career-entry">
-      <span class="career-dates">Jun – Aug 2021</span>
-      <h2>Henan Yiluo Investment Co., Ltd.</h2>
-      <p>Analyst Intern · Department of Strategy</p>
-    </div>
-    <div class="career-entry">
-      <span class="career-dates">Dec 2020 – Jan 2021</span>
-      <h2>Central China Securities Co., Ltd.</h2>
-      <p>Asset Management Intern · Department of Strategy</p>
-    </div>
+    {career.map(({ frontmatter: entry }) => <a class="career-entry" href={sitePath(`/career/${entry.slug}/`)}>
+      <span class="career-dates">{entry.dates}</span>
+      <h2>{entry.title}</h2>
+      <p>{entry.role}</p>
+      <span class="career-read-more">Read experience →</span>
+    </a>)}
   </div>
 </BaseLayout>
