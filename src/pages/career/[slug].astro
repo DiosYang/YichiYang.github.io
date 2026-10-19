@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { sitePath } from '../../lib/paths';
 import { career } from '../../data/career';
+import CareerModules from '../../components/CareerModules.astro';
 
 export function getStaticPaths() {
   return career.map((entry) => ({ params: { slug: entry.frontmatter.slug }, props: { entry } }));
@@ -19,5 +20,6 @@ const Content = entry.Content;
     <p>{role}</p>
   </header>
   <article class="article-body career-detail"><Content /></article>
+  {entry.frontmatter.slug === 'du-xiaoman' && <CareerModules />}
   <a class="simple-back" href={sitePath('/career/')}>← Career</a>
 </BaseLayout>

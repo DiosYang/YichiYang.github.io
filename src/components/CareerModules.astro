@@ -1,0 +1,12 @@
+---
+import { careerModules } from '../data/career-modules';
+import { sitePath } from '../lib/paths';
+---
+<section class="career-modules" aria-labelledby="selected-work">
+  <h2 id="selected-work">Selected Work</h2>
+  {careerModules.map(({ frontmatter: entry }) => <a class="career-module-card" id={entry.slug} href={sitePath(`/career/du-xiaoman/${entry.slug}/`)}>
+    <h3>{entry.title}</h3>
+    <p>{entry.summary}</p>
+    <span class="career-read-more">Read full experience →</span>
+  </a>)}
+</section>
