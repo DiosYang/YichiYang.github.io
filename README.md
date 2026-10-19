@@ -15,7 +15,7 @@ Open the local address printed by Astro. Change page copy in `src/pages/`, proje
 
 Each experience has a Markdown file in `src/content/career/`. Edit the English text below the frontmatter to update its detail page. The title, dates, role, slug, and order in the frontmatter also control the Career list.
 
-The five case-study sections in `du-xiaoman.md` are ready for expansion. Replace each `Details to be added.` paragraph with your content; the HTML comments provide writing prompts and are not displayed on the page. Save to preview locally, then commit and publish the changes through the GitHub Pages workflow.
+The six experience sections in `du-xiaoman.md` cover multiple-lender borrowing, debt-refinancing dependence, credit cards, external data, business analysis, and AI applications. Edit the text under each heading directly. The section links at the start of Selected Work use the generated heading anchors, so update them if you rename a heading. Save to preview locally, then commit and publish the changes through the GitHub Pages workflow.
 
 ## Publish
 
