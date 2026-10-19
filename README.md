@@ -15,7 +15,16 @@ Open the local address printed by Astro. Change page copy in `src/pages/`, proje
 
 Each experience has a Markdown file in `src/content/career/`. Edit the English text below the frontmatter to update its detail page. The title, dates, role, slug, and order in the frontmatter also control the Career list.
 
-The six experience sections in `du-xiaoman.md` cover multiple-lender borrowing, debt-refinancing dependence, credit cards, external data, business analysis, and AI applications. Edit the text under each heading directly. The section links at the start of Selected Work use the generated heading anchors, so update them if you rename a heading. Save to preview locally, then commit and publish the changes through the GitHub Pages workflow.
+`src/content/career/du-xiaoman.md` contains the short introduction on the Du Xiaoman overview page. Each of its six experiences has a separate Markdown file in `src/content/career/du-xiaoman/`:
+
+- `multiple-lender-borrowing.md`
+- `borrowing-to-repay-existing-loans.md`
+- `credit-card-risk-rating.md`
+- `third-party-data.md`
+- `other-analyses.md`
+- `ai-assisted-risk-analysis-and-feature-discovery.md`
+
+Edit `summary` in a module's frontmatter to change both its clickable overview and the Summary at the top of its detail page. Edit the Markdown below the frontmatter for the full explanation. The detail-page contents menu is generated from `##` headings. Keep `slug` stable to preserve links; `order` controls the overview list. Save to preview locally, then commit and publish the changes through the GitHub Pages workflow.
 
 ## Publish
 
