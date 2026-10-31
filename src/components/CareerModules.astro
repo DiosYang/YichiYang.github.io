@@ -1,12 +1,15 @@
 ---
-import { careerModules } from '../data/career-modules';
-import { sitePath } from '../lib/paths';
+import { getCareerModules } from '../data/career-modules';
+import { localizedPath, words, type Language } from '../lib/i18n';
+const { lang = 'en' } = Astro.props as { lang?: Language };
+const ui = words[lang];
+const careerModules = getCareerModules(lang);
 ---
 <section class="career-modules" aria-labelledby="selected-work">
-  <h2 id="selected-work">Selected Work</h2>
-  {careerModules.map(({ frontmatter: entry }) => <a class="career-module-card" id={entry.slug} href={sitePath(`/career/du-xiaoman/${entry.slug}/`)}>
+  <h2 id="selected-work">{ui.selectedWork}</h2>
+  {careerModules.map(({ frontmatter: entry }) => <a class="career-module-card" id={entry.slug} href={localizedPath(`/career/du-xiaoman/${entry.slug}/`, lang)}>
     <h3>{entry.title}</h3>
     <p>{entry.summary}</p>
-    <span class="career-read-more">Read full experience →</span>
+    <span class="career-read-more">{ui.readFull}</span>
   </a>)}
 </section>

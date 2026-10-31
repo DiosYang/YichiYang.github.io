@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/ArticleLayout.astro
 title: "Legal Aid DNA Unit Research"
 description: "A research project. Details are being prepared."
 ---

@@ -1,31 +1,32 @@
 ---
 import '../styles/global.css';
 import { sitePath } from '../lib/paths';
+import { localizedPath, words, type Language } from '../lib/i18n';
 
 interface Props {
   title?: string;
   description?: string;
+  lang?: Language;
+  route?: string;
+  hashMap?: Record<string, string>;
 }
-
-const {
-  title = 'Dios Yang',
-  description = 'The personal website of Yichi (Dios) Yang.',
-} = Astro.props;
-
-const path = Astro.url.pathname;
+const { lang = 'en', route = '/', hashMap = {} } = Astro.props;
+const ui = words[lang];
+const { title = ui.name, description = ui.description } = Astro.props;
+const otherLang: Language = lang === 'en' ? 'zh' : 'en';
+const pairPath = localizedPath(route, otherLang);
 const links = [
-  { href: '/about/', label: 'About' },
-  { href: '/career/', label: 'Career' },
-  { href: '/project/', label: 'Project' },
-  { href: '/cv-resume/', label: 'CV/Resume' },
-  { href: '/photography/', label: 'Photography' },
+  { href: '/about/', label: ui.about },
+  { href: '/career/', label: ui.career },
+  { href: '/project/', label: ui.project },
+  { href: '/cv-resume/', label: ui.resume },
+  { href: '/photography/', label: ui.photography },
 ];
-const active = (href: string) => href === '/about/'
-  ? path === sitePath('/') || path.startsWith(sitePath(href))
-  : path.startsWith(sitePath(href));
+const active = (href: string) => href === '/about/' ? route === '/' || route.startsWith(href) : route.startsWith(href);
+const chineseRoot = localizedPath('/', 'zh');
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,29 +35,54 @@ const active = (href: string) => href === '/about/'
     <meta name="robots" content="noindex, nofollow" />
     <title>{title}</title>
     <link rel="icon" href={sitePath('/favicon-cat.png')} type="image/png" sizes="300x300" />
+    <link rel="alternate" hreflang="en" href={localizedPath(route, 'en')} />
+    <link rel="alternate" hreflang="zh-CN" href={localizedPath(route, 'zh')} />
+    <script is:inline define:vars={{ lang, route, chineseRoot }}>
+      try {
+        if (lang === 'en' && route === '/' && localStorage.getItem('site-language') === 'zh') {
+          window.location.replace(chineseRoot + window.location.search + window.location.hash);
+        }
+      } catch {}
+    </script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
+    <a class="skip-link" href="#main-content">{ui.skip}</a>
     <div class="site-shell">
-      <aside class="sidebar" aria-label="Site navigation">
+      <aside class="sidebar" aria-label={ui.navigation}>
         <div class="sidebar-inner">
-          <a class="site-title" href={sitePath('/')}>Dios Yang</a>
-          <nav class="side-nav" aria-label="Main navigation">
-            {links.map((link) => <a href={sitePath(link.href)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
+          <div class="site-brand">
+            <a class="site-title" href={localizedPath('/', lang)}>{ui.name}</a>
+            <a class="language-toggle" href={pairPath} lang={otherLang === 'zh' ? 'zh-CN' : 'en'} hreflang={otherLang === 'zh' ? 'zh-CN' : 'en'} aria-label={ui.switchLabel} data-language-switch>{ui.switchText}</a>
+          </div>
+          <nav class="side-nav" aria-label={ui.mainNavigation}>
+            {links.map((link) => <a href={localizedPath(link.href, lang)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
           </nav>
           <div class="social-marks" aria-hidden="true"><span>𝕏</span><span>f</span><span>◎</span></div>
           <details class="mobile-menu">
-            <summary>Menu</summary>
-            <nav aria-label="Mobile navigation">
-              {links.map((link) => <a href={sitePath(link.href)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
+            <summary>{ui.menu}</summary>
+            <nav aria-label={ui.mobileNavigation}>
+              {links.map((link) => <a href={localizedPath(link.href, lang)} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
             </nav>
           </details>
         </div>
       </aside>
       <div class="site-main-column">
         <main id="main-content" class="site-main"><div class="content"><slot /></div></main>
-        <footer class="site-footer">© {new Date().getFullYear()} Yichi (Dios) Yang</footer>
+        <footer class="site-footer">© {new Date().getFullYear()} {ui.fullName}</footer>
       </div>
     </div>
+    <script is:inline define:vars={{ lang, otherLang, hashMap }}>
+      try { localStorage.setItem('site-language', lang); } catch {}
+      document.querySelectorAll('[data-language-switch]').forEach((link) => {
+        link.addEventListener('click', () => {
+          try { localStorage.setItem('site-language', otherLang); } catch {}
+          const target = new URL(link.href, window.location.href);
+          const hash = decodeURIComponent(window.location.hash.slice(1));
+          if (hash) target.hash = hashMap[hash] || hash;
+          target.search = window.location.search;
+          link.href = target.href;
+        });
+      });
+    </script>
   </body>
 </html>

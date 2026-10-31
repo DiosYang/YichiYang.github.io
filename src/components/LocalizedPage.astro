@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutContent from './AboutContent.astro';
+import CareerModules from './CareerModules.astro';
+import { words, localizedPath, type Language } from '../lib/i18n';
+import { sitePath } from '../lib/paths';
+import { getCareer } from '../data/career';
+import { getCareerModules } from '../data/career-modules';
+import { getAlbums } from '../data/albums';
+import { projects, getProjectPage } from '../data/projects';
+
+interface Props { route: string; lang: Language; }
+const { route, lang } = Astro.props;
+const ui = words[lang];
+const otherLang: Language = lang === 'zh' ? 'en' : 'zh';
+const careers = getCareer(lang);
+const modules = getCareerModules(lang);
+const albums = getAlbums(lang);
+const careerEntry = careers.find((page) => route === `/career/${page.frontmatter.slug}/`);
+const moduleEntry = modules.find((page) => route === `/career/du-xiaoman/${page.frontmatter.slug}/`);
+const album = albums.find((page) => route === `/photography/${page.slug}/`);
+const project = projects.find((page) => route === `/${page.slug}/`);
+const projectEntry = project ? getProjectPage(project.slug, lang) : undefined;
+const entry = moduleEntry || careerEntry || projectEntry;
+const Content = entry?.Content;
+const headings = moduleEntry?.getHeadings().filter((heading) => heading.depth === 2) || [];
+const pairEntry = moduleEntry ? getCareerModules(otherLang).find((page) => page.frontmatter.slug === moduleEntry.frontmatter.slug)
+  : careerEntry ? getCareer(otherLang).find((page) => page.frontmatter.slug === careerEntry.frontmatter.slug)
+  : project ? getProjectPage(project.slug, otherLang) : undefined;
+const currentHeadings = entry?.getHeadings() || [];
+const pairedHeadings = pairEntry?.getHeadings() || [];
+const hashMap = Object.fromEntries(currentHeadings.map((heading, index) => [heading.slug, pairedHeadings[index]?.slug || heading.slug]));
+let title: string = ui.name;
+let description: string = ui.description;
+if (entry) { title = entry.frontmatter.title; description = 'summary' in entry.frontmatter ? entry.frontmatter.summary : 'description' in entry.frontmatter ? entry.frontmatter.description : ui.description; }
+else if (album) { title = album.title; description = album.note; }
+else if (route === '/career/') title = ui.career;
+else if (route === '/project/') title = ui.project;
+else if (route === '/photography/') title = ui.photography;
+else if (route === '/cv-resume/') title = ui.resume;
+else if (route === '/maine/') title = ui.maine;
+else if (route === '/about/') title = ui.aboutName;
+const fullTitle = title === ui.name ? title : `${title} — ${ui.name}`;
+const columns = [0, 1, 2].map((column) => albums.map((item, index) => ({ album: item, index })).filter(({ index }) => index % 3 === column));
+---
+<BaseLayout title={fullTitle} description={description} lang={lang} route={route} hashMap={hashMap}>
+  {(route === '/' || route === '/about/') && <AboutContent lang={lang} />}
+  {route === '/career/' && <>
+    <h1 class="page-title">{ui.career}</h1>
+    <div class="career-list" aria-label={ui.experience}>
+      {careers.map(({ frontmatter: page }) => <a class="career-entry" href={localizedPath(`/career/${page.slug}/`, lang)}>
+        <span class="career-dates">{page.dates}</span><h2>{page.title}</h2><p>{page.role}</p>
+        <span class="career-read-more">{ui.readExperience}</span>
+      </a>)}
+    </div>
+  </>}
+  {careerEntry && <>
+    <a class="simple-back" href={localizedPath('/career/', lang)}>← {ui.career}</a>
+    <header class="career-detail-header">
+      <h1 class="page-title">{careerEntry.frontmatter.title}</h1>
+      <span class="career-dates">{careerEntry.frontmatter.dates}</span><p>{careerEntry.frontmatter.role}</p>
+    </header>
+    <article class="article-body career-detail">{Content && <Content />}</article>
+    {careerEntry.frontmatter.slug === 'du-xiaoman' && <CareerModules lang={lang} />}
+    <a class="simple-back" href={localizedPath('/career/', lang)}>← {ui.career}</a>
+  </>}
+  {moduleEntry && <>
+    <a class="simple-back" href={localizedPath('/career/du-xiaoman/', lang)}>{ui.backDu}</a>
+    <header class="career-detail-header">
+      <p class="career-module-context">{ui.duXiaoman}</p><h1 class="page-title">{moduleEntry.frontmatter.title}</h1>
+    </header>
+    <section class="career-module-summary" aria-labelledby="summary"><h2 id="summary">{ui.summary}</h2><p>{moduleEntry.frontmatter.summary}</p></section>
+    <nav class="career-module-toc" aria-label={ui.contents}>
+      <h2>{ui.contents}</h2><ul>{headings.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ul>
+    </nav>
+    <article class="article-body career-detail career-module-detail">{Content && <Content />}</article>
+    <a class="simple-back" href={localizedPath('/career/du-xiaoman/', lang)}>{ui.backAllDu}</a>
+  </>}
+  {route === '/project/' && <>
+    <h1 class="page-title">{ui.project}</h1>
+    <div class="project-list">{projects.map((page) => <a href={localizedPath(`/${page.slug}/`, lang)}>{getProjectPage(page.slug, lang)?.frontmatter.title}</a>)}</div>
+  </>}
+  {projectEntry && <>
+    <h1 class="page-title">{projectEntry.frontmatter.title}</h1>
+    <article class="article-body">{Content && <Content />}</article>
+    <p><a class="simple-back" href={localizedPath('/project/', lang)}>← {ui.project}</a></p>
+  </>}
+  {route === '/cv-resume/' && <>
+    <h1 class="page-title">{ui.resume}</h1>
+    <div class="resume-links">
+      <a href={sitePath('/media/resume-zh.pdf')} target="_blank" rel="noopener">{ui.resumeZh}</a>
+      <a href={sitePath('/media/resume-en.pdf')} target="_blank" rel="noopener">{ui.resumeEn}</a>
+    </div>
+  </>}
+  {route === '/photography/' && <>
+    <h1 class="page-title">{ui.photography}</h1>
+    <div class="photo-grid" aria-label={ui.collections}>
+      {columns.map((column) => <div class="photo-column">{column.map(({ album: item, index }) => <a class="photo-cover" style={`--photo-order:${index}`} href={localizedPath(`/photography/${item.slug}/`, lang)} aria-label={`${ui.viewCollection}: ${item.title}`}>
+        <img src={sitePath(item.photos[0].src)} alt={item.photos[0].alt} loading={index < 3 ? 'eager' : 'lazy'} />
+        <span class="photo-cover-overlay"><span class="photo-cover-title">{item.title}</span><span class="photo-cover-description">{item.note}</span></span>
+      </a>)}</div>)}
+    </div>
+  </>}
+  {album && <>
+    <h1 class="page-title">{album.title}</h1><p class="album-intro">{album.note}</p>
+    <a class="simple-back" href={localizedPath('/photography/', lang)}>← {ui.photography}</a>
+    <div class="album-photos" aria-label={`${album.title} ${ui.photos}`}>{album.photos.map((photo, index) => <figure>
+      <a href={sitePath(photo.src)} target="_blank" rel="noopener" aria-label={`${ui.openPhoto}: ${photo.caption}`}><img src={sitePath(photo.src)} alt={photo.alt} loading={index === 0 ? 'eager' : 'lazy'} /></a>
+      <figcaption>{photo.caption}</figcaption>
+    </figure>)}</div>
+  </>}
+  {route === '/maine/' && <>
+    <h1 class="page-title">{ui.maine}</h1><p><a class="simple-back" href={localizedPath('/photography/maine/', lang)}>{ui.viewMaine}</a></p>
+  </>}
+</BaseLayout>

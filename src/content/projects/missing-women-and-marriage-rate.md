@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/ArticleLayout.astro
 title: "Missing Women and Marriage Rate"
 description: "Research on sex ratios at birth and rural marriage patterns in China."
 ---

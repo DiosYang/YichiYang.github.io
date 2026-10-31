@@ -1,0 +1,14 @@
+---
+import LocalizedPage from '../components/LocalizedPage.astro';
+import { pageRoutes } from '../data/routes';
+import type { Language } from '../lib/i18n';
+
+export function getStaticPaths() {
+  return (['en', 'zh'] as Language[]).flatMap((lang) => pageRoutes.map((route) => ({
+    params: { path: (lang === 'zh' ? `/zh${route}` : route).replace(/^\/+|\/+$/g, '') || undefined },
+    props: { lang, route },
+  })));
+}
+const { lang, route } = Astro.props;
+---
+<LocalizedPage lang={lang} route={route} />

@@ -1,3 +1,6 @@
+import type { MarkdownInstance } from 'astro';
+import type { Language } from '../lib/i18n';
+
 export const projects = [
   {
     title: 'Modeling ecDNA Copy Number Dynamics in Cancer Cell Population',
@@ -40,3 +43,9 @@ export const projects = [
     number: '05',
   },
 ] as const;
+
+interface ProjectContent { title: string; description: string; }
+const englishPages = import.meta.glob<MarkdownInstance<ProjectContent>>('../content/projects/*.md', { eager: true });
+const chinesePages = import.meta.glob<MarkdownInstance<ProjectContent>>('../content/zh/projects/*.md', { eager: true });
+export const getProjectPages = (lang: Language) => Object.values(lang === 'zh' ? chinesePages : englishPages);
+export const getProjectPage = (slug: string, lang: Language) => getProjectPages(lang).find((page) => page.file.endsWith(`/${slug}.md`));
