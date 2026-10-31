@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open the local address printed by Astro. Change page copy in `src/pages/`, project summaries in `src/data/projects.ts`, photography collections in `src/data/albums.ts`, global styles in `src/styles/global.css`, and images or PDFs in `public/media/`.
+Open the local address printed by Astro. Change shared page copy in `src/components/LocalizedPage.astro` and `src/components/AboutContent.astro`, project articles in `src/content/projects/`, photography collections in `src/data/albums.ts`, global styles in `src/styles/global.css`, and images or PDFs in `public/media/`.
 
 ## Edit Career content
 
@@ -35,3 +35,16 @@ The workflow builds with `/YichiYang.github.io` as the GitHub Pages path. Local 
 The deployed copy is marked `noindex` while it is a preview alongside the WordPress site. Remove the `noindex` meta tag in `src/layouts/BaseLayout.astro` when the domain is switched to GitHub Pages.
 
 The original WordPress pages with unfinished content remain as short placeholder pages here. No project details have been invented.
+
+## 中英文内容编辑
+
+全站27个页面均提供中英文版本：现有网址是英文，在路径前增加 `/zh/` 为中文。左侧姓名旁的语言按钮切换到当前页面的对应版本；浏览器会记住语言选择。正文目录的对应章节也可随语言切换。
+
+- 导航、按钮、姓名及通用文案：`src/lib/i18n.ts`（中文姓名为杨易驰）。
+- 关于我：`src/components/AboutContent.astro`。
+- 英文工作经历：`src/content/career/`；对应中文：`src/content/zh/career/`。
+- 英文度小满模块：`src/content/career/du-xiaoman/`；对应中文：`src/content/zh/career/du-xiaoman/`。
+- 英文研究项目：`src/content/projects/`；对应中文：`src/content/zh/projects/`。
+- 相册标题、介绍和照片说明：`src/data/albums.ts`，同时包含中英文。
+
+中英文 Markdown 文件使用相同文件名及 `slug`，分别编辑各语言的标题、概括和正文。为保留章节切换位置，两种语言的标题层级与顺序应保持一致。新增页面时，在 `src/data/routes.ts` 登记共用路径，即可同时生成中英文页面。简历页保留原有中英文PDF下载，语言按钮切换网页说明。

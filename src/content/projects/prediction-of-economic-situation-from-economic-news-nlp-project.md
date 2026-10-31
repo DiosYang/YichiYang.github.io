@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/ArticleLayout.astro
 title: "Prediction of Economic Situation from Economic News — NLP Project"
 description: "A project in natural language processing. Details are being prepared."
 ---

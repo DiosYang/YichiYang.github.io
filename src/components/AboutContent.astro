@@ -1,11 +1,22 @@
-<h1 class="page-title">Yichi(Dios) Yang</h1>
+---
+import { words, type Language } from '../lib/i18n';
+const { lang = 'en' } = Astro.props as { lang?: Language };
+const ui = words[lang];
+---
+<h1 class="page-title">{ui.aboutName}</h1>
 <div class="about-copy">
+  {lang === 'zh' ? <>
+    <p>你好，我是杨易驰，一名机器学习工程师与数据科学从业者。我热衷于通过数据理解世界，并从中提炼有价值的洞察。我在纽约大学获得数学与经济理论联合学士学位，并在哥伦比亚大学获得统计学硕士学位。</p>
+    <p>我具备统计学、编程与应用数学基础，参与过大规模数据处理、模型可解释性和端到端机器学习流程相关项目，工作覆盖数据探索、特征工程、建模与部署。我关注变量之间如何联系、相互作用并影响结果，希望通过特征选择与分析，理解数据背后的结构和运行逻辑。</p>
+    <p>除了从数据中寻找结构与意义，我也喜欢用摄影记录日常生活中细微的秩序：光影的变化、拥挤街道的节奏，以及转瞬即逝的安静时刻。摄影让我用另一种视角观察世界，也是学习如何看见的一种方式。</p>
+  </> : <>
   <p>Hi, I’m a Machine Learning Engineer and Data Scientist with a strong passion for interpreting the world through data—and let data speak back in insight. I completed a Bachelor degree in joint of mathematics and economics in New York University and earned a Master of Arts in Statistics from Columbia University.</p>
   <p>I hold a solid background in statistics, programming, and applied mathematics, and have worked on projects spanning large-scale data processing, model interpretability, and end-to-end machine learning pipelines—from data exploration and feature engineering to deployment. More importantly, I believe that feature selection is not merely a step for improving performance—it’s a window into the deeper structure of the data. I’m driven by the pursuit of understanding how variables connect, interact, and ultimately shape outcomes. To me, machine learning is not just about prediction—it’s about uncovering the logic of the world through data.</p>
   <p>Just as I seek structure and meaning in data, I find joy in capturing the subtle patterns of everyday life through photography. Whether it’s the play of light and shadow, the rhythm of a crowded street, or a fleeting moment of stillness—I enjoy observing the world’s hidden logic through a different lens. Photography, for me, is another way of learning to see.</p>
+  </>}
 </div>
 <section class="contact" aria-labelledby="contact-title">
-  <h2 id="contact-title">Contact</h2>
+  <h2 id="contact-title">{ui.contact}</h2>
   <p>+86 186 2558 2953</p>
   <p>+1 347 277 3329<br /><a href="mailto:Diosyang59@gmail.com">Diosyang59@gmail.com</a></p>
 </section>

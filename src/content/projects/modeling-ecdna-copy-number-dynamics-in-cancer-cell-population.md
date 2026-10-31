@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/ArticleLayout.astro
 title: "Modeling ecDNA Copy Number Dynamics in Cancer Cell Population"
 description: "Research at Columbia University Irving Institute for Cancer Dynamics."
 ---
