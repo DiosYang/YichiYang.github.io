@@ -28,6 +28,13 @@ jobs:
         env:
           PUBLIC_SITE_BASE: /YichiYang.github.io
       - uses: actions/configure-pages@v5
+      - name: Use GitHub Actions as the Pages source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" != "workflow" ]; then
+            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
